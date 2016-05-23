@@ -9,6 +9,7 @@
  */
  
 require_once (dirname(dirname(dirname(__FILE__)))."/config.php");
+include $CFG->dirroot.'/lib/graphlib.php';
 global $PAGE, $OUTPUT;
 
 require_login();
@@ -17,19 +18,24 @@ if (isguestuser()) {
 }
 
 // Optional Parameters
-$action = optional_param("action", "view", PARAM_TEXT);
-$rutclient = optional_param("rutclient", null, PARAM_INT);
-$sesskey = optional_param("sesskey", null, PARAM_ALPHANUM);
+$marker_id = optional_param("id", null, PARAM_INT);
 
 $context = context_system::instance();
 
 $urlayudantes = new moodle_url("/local/ayudantes/misayudantes.php");
 
+//We make use of the recieved id to obtain the marker information on this page
+$markerinfosql = "select firstname, lastname
+				from {user} u
+				where u.id =".$marker_id;
+
+$marker = $DB->get_record_sql($markerinfosql);
+
 // Page specification
 $PAGE->set_url($urlayudantes);
 $PAGE->set_context($context);
 $PAGE->set_pagelayout("standard");
-$PAGE->set_heading(get_string("helper_name", "local_ayudantes"));
+$PAGE->set_heading(get_string("helper_name", "local_ayudantes").$marker->firstname." ".$marker->lastname);
 
 $advlink = $CFG->wwwroot.'/local/ayudantes/img/advance.PNG';
 $justlink = $CFG->wwwroot.'/local/ayudantes/img/just.PNG';
@@ -37,7 +43,6 @@ $justlink = $CFG->wwwroot.'/local/ayudantes/img/just.PNG';
 echo $OUTPUT->header();
 
 echo get_string("corrected_questions", "local_ayudantes");
-
 $graphs = new html_table();
 
 $graphs->data[] = array(
@@ -50,13 +55,9 @@ $graphs->data[] = array(
 		"<img src=".$justlink.">"
 );
 
-$buttonurl = new moodle_url($CFG->dirroot . "/");
+$buttonurl = new moodle_url('/local/ayudantes/ayudantes.php');
 
 echo html_writer::table ( $graphs );
 echo html_writer::nonempty_tag("div", $OUTPUT->single_button($buttonurl, "Atras"), array("align" => "center"));
 
 echo $OUTPUT->footer();
-
-/*
-*/
-
