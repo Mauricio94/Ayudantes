@@ -10,7 +10,7 @@
  
 require_once (dirname(dirname(dirname(__FILE__)))."/config.php");
 include $CFG->dirroot.'/lib/graphlib.php';
-global $PAGE, $OUTPUT;
+global $DB, $PAGE, $OUTPUT;
 
 require_login();
 if (isguestuser()) {

@@ -9,7 +9,7 @@
  */
  
 require_once (dirname(dirname(dirname(__FILE__)))."/config.php");
-global $DB, $USER, $PAGE, $OUTPUT;
+global $DB, $PAGE, $OUTPUT;
 
 require_login();
 if (isguestuser()) {
