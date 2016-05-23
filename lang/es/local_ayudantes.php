@@ -24,7 +24,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
-$string["helper_name"] = "Nombre del ayudante: Patricio Rivera";
+$string["helper_name"] = "Nombre del ayudante: ";
 $string["corrected_questions"] = "Preguntas corregidas por dia: 10";
 $string["progress_day"] = "Avance por dia";
 $string["justice_perception"] = "Percepcion de justicia";
+$string["my_helpers"] = "Mis Ayudantes";
+$string["see_marker_info"] = "Ver informacion";

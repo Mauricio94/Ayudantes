@@ -13,4 +13,4 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->pluginname = "local_ayudantes";
 $plugin->component = "local_ayudantes";
-$plugin->version = 2016050402;
+$plugin->version = 2016052300;
