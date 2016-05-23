@@ -4,7 +4,7 @@
  *
  * @package local
  * @subpackage notebookstore
- * @copyright 2015 Mauricio Meza (mameza@alumnos.uai.cl)
+ * @copyright 2016 Mauricio Meza (mameza@alumnos.uai.cl)
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
@@ -16,14 +16,9 @@ if (isguestuser()) {
 	die();
 }
 
-// Optional Parameters
-$action = optional_param("action", "view", PARAM_TEXT);
-$rutclient = optional_param("rutclient", null, PARAM_INT);
-$sesskey = optional_param("sesskey", null, PARAM_ALPHANUM);
-
 $context = context_system::instance();
 	
-$urlindex = new moodle_url("/local/notebookstore/index.php");
+$urlindex = new moodle_url("/local/ayudantes/ayudantes.php");
 
 // Page specification
 $PAGE->set_url($urlindex);
@@ -45,12 +40,13 @@ $markersinfosql = "select c.marker, u.*
 				inner join mdl_user u (u.id = c.marker)";
 
 $markers = $DB->get_records_sql($test, array("id"=>"0"));
-var_dump($markers);
 
-$var = $markers->firstname;
-echo "</br>".$var;
 foreach ($markers as $marker){
-	$helpers_order->data[] = array($marker->firstname."</br>".$marker->lastname);
+	$helper_id = $marker->id;
+	$buttonurl = new moodle_url('/misayudantes.php', array('id' => $helper_id));
+	echo $marker->firstname."</br>".$marker->lastname;
+	echo $OUTPUT->single_button($buttonurl, "informacion");
+	
+	
 }
-echo html_writer::table ( $helpers_order );
 echo $OUTPUT->footer();
