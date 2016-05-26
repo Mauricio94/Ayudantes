@@ -42,6 +42,14 @@ $PAGE->set_heading(get_string("helper_name", "local_ayudantes").$marker->firstna
 $advlink = $CFG->wwwroot.'/local/ayudantes/img/advance.PNG';
 $justlink = $CFG->wwwroot.'/local/ayudantes/img/just.PNG';
 
+$markersinfosql = "select c.markerid 
+				from {emarking} e
+				inner join {emarking_submission} s on (s.emarking = e.id)
+				inner join {emarking_draft} d on (d.submissionid = s.id)
+				inner join {emarking_comment} c on (c.draft = d.id)
+				where c.markerid=".$marker_id;
+
+
 echo $OUTPUT->header();
 
 echo get_string("corrected_questions", "local_ayudantes");

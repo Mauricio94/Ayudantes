@@ -32,19 +32,19 @@ echo $OUTPUT->header();
 //$test = "select id,firstname, lastname from {user}";
 
 //Query to bring markers information
-$markersinfosql = "select c.marker, u.firstname, u.lastname 
-				from mdl_emarking e
-				inner join mdl_emarking_submission s on (s.emarking = e.id)
-				inner join mdl_emarking_draft d on (d.submissionid = s.id)
-				inner join mdl_emarking_comment c on (c.draft = d.id)
-				inner join mdl_user u (u.id = c.marker)";
+$markersinfosql = "select c.markerid, u.firstname, u.lastname 
+				from {emarking} e
+				inner join {emarking_submission} s on (s.emarking = e.id)
+				inner join {emarking_draft} d on (d.submissionid = s.id)
+				inner join {emarking_comment} c on (c.draft = d.id)
+				inner join {user} u on (u.id = c.markerid)";
 
 $markers = $DB->get_records_sql($markersinfosql, array("id"=>"0"));
 
 //With this we display the basic helper's information and a button to see their correcting development
 //Right now it doesn't have focus on aesthetic, only on funtionality
 foreach ($markers as $marker){
-	$marker_id = $marker->marker;
+	$marker_id = $marker->markerid;
 	$buttonurl = new moodle_url('/local/ayudantes/misayudantes.php', array('id' => $marker_id));
 	echo $marker->firstname."</br>".$marker->lastname;
 	echo $OUTPUT->single_button($buttonurl, get_string("see_marker_info", "local_ayudantes"));
